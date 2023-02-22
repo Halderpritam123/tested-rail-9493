@@ -1,9 +1,12 @@
 import logo from "./logo.png"
+import offer from "./offer.jpg"
 import { AiOutlineMobile } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
 import { MdCardGiftcard } from "react-icons/md";
 import { FiHelpCircle } from "react-icons/fi";
 import { BsBagCheck } from "react-icons/bs";
+import Navoptions from "./Navoption";
+import Login from "./Login";
 import {
   Box,
   Flex,
@@ -12,6 +15,12 @@ import {
   Button,
   Stack,
   Collapse,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
   Icon,
   Link,
   Popover,
@@ -21,7 +30,9 @@ import {
   useBreakpointValue,
   useDisclosure,
   Input,
-  Img
+  Img,
+  Tooltip,
+  Center
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -34,12 +45,12 @@ export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box font-family="Inter, Roboto, Arial, sans-serif">
-      <Box display="flex" justifyContent="space-between" px="7%"  py="8px" bgImage="url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7a65e265-c116-4a4a-aeeb-7146aa802331/dblrd58-faf297c6-247b-48bb-a2ce-030f7c26a651.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzdhNjVlMjY1LWMxMTYtNGE0YS1hZWViLTcxNDZhYTgwMjMzMVwvZGJscmQ1OC1mYWYyOTdjNi0yNDdiLTQ4YmItYTJjZS0wMzBmN2MyNmE2NTEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.U2QT58dVPsh8f9T2UDTdCSFBIuCKn6rTkVWDCDieHYA')" >
+    <Box pos="fixed" font-family="Inter, Roboto, Arial, sans-serif" w="100%" zIndex={99999}>
+      <Box display="flex" justifyContent="space-between" px="7%" py="8px" bgImage="url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7a65e265-c116-4a4a-aeeb-7146aa802331/dblrd58-faf297c6-247b-48bb-a2ce-030f7c26a651.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzdhNjVlMjY1LWMxMTYtNGE0YS1hZWViLTcxNDZhYTgwMjMzMVwvZGJscmQ1OC1mYWYyOTdjNi0yNDdiLTQ4YmItYTJjZS0wMzBmN2MyNmE2NTEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.U2QT58dVPsh8f9T2UDTdCSFBIuCKn6rTkVWDCDieHYA')" >
         <Box>
-            BEAUTY BONANZA Get Your Daily Dose Of Amazing Deals</Box>
+          BEAUTY BONANZA Get Your Daily Dose Of Amazing Deals</Box>
         <Box >
-          <Link href="#" isExternal >
+          <Link href="#" isxternal >
             <Icon as={AiOutlineMobile} />Get App
           </Link> |
           <Link href="#" isExternal>
@@ -57,7 +68,7 @@ export default function WithSubnavigation() {
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
         minH={'60px'}
-        py={{ base: 2 }}
+        // py={{ base: 2 }}
         px={{ base: 50 }}
         borderBottom={1}
         borderStyle={'solid'}
@@ -82,14 +93,14 @@ export default function WithSubnavigation() {
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
-            <Img w={100} src={logo} align="center" padding={2} />
+            <Img w={100} src={logo} align="center" p={1} />
           </Text>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
           <Box px="2%" w="40vw">
 
-          <Input placeholder="Search on Sykaa"  />
+            <Input placeholder="Search on Sykaa" />
           </Box>
 
         </Flex>
@@ -99,26 +110,80 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'pink.400'}
-            href={'#'}
-            _hover={{
-              bg: 'pink.300',
-            }}>
-            Sign In
-          </Button>
+          <Popover>
+            <PopoverTrigger>
+              <Button
+                as={'a'}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'pink.400'}
+                href={'#'}
+                _hover={{
+                  bg: 'pink.300',
+                }}>
+                Sign In
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              {/* <PopoverHeader>Confirmation!</PopoverHeader> */}
+              <PopoverBody>{<Login/>}</PopoverBody>
+            </PopoverContent>
+          </Popover>
         </Stack>
-      {/* --------------------------------- */}
-      <Link p={6} to=""><Icon as={BsBagCheck} /></Link>
+        {/* --------------------------------- */}
+        <Link p={6} to=""><Icon as={BsBagCheck} /></Link>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
+      <Box>
+        <Box borderBottom={1}
+          borderStyle={'solid'}
+          borderColor={useColorModeValue('gray.200', 'gray.900')} py={2} display="flex" justifyContent="space-around" px={50} align={Center} bg="white" zIndex={9} boxShadow="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px">
+          <Tooltip maxWidth="500%" bg="white" color="black" label={<Navoptions />}  >
+            Makeup
+          </Tooltip>
+          <Tooltip
+            maxWidth="500%" bg="white" color="black"
+            label={<Navoptions />} >
+            Skin
+          </Tooltip>
+          <Tooltip maxWidth="500%" bg="white" color="black" label={<Navoptions />} aria-label='A tooltip'>
+            Hair
+          </Tooltip>
+          <Tooltip maxWidth="500%" bg="white" color="black" label={<Navoptions />} aria-label='A tooltip'>
+            Appliances
+          </Tooltip>
+          <Tooltip maxWidth="500%" bg="white" color="black" label={<Navoptions />} aria-label='A tooltip'>
+            Bath & Body
+          </Tooltip>
+          <Tooltip maxWidth="500%" bg="white" color="black" label={<Navoptions />} aria-label='A tooltip'>
+            Natural
+          </Tooltip>
+          <Tooltip maxWidth="500%" bg="white" color="black" label={<Navoptions />} aria-label='A tooltip'>
+            Mom & Baby
+          </Tooltip>
+          <Tooltip maxWidth="500%" bg="white" color="black" label={<Navoptions />} aria-label='A tooltip'>
+            Health & Wellness
+          </Tooltip>
+          <Tooltip maxWidth="500%" bg="white" color="black" label={<Navoptions />} aria-label='A tooltip'>
+            Men
+          </Tooltip>
+          <Tooltip maxWidth="500%" bg="white" color="black" label={<Navoptions />} aria-label='A tooltip'>
+            Fragrance
+          </Tooltip>
+          <Tooltip maxWidth="500%" bg="white" color="black" label={<Navoptions />} aria-label='A tooltip'>
+            Pop Ups
+          </Tooltip>
+          <Box w="4%">
+            <Img w="100%" src={offer} />
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 }
@@ -156,11 +221,13 @@ const DesktopNav = () => {
                 p={4}
                 rounded={'xl'}
                 minW={'sm'}>
+                {/* ---------------------------------------- */}
                 <Stack>
                   {navItem.children.map((child) => (
                     <DesktopSubNav key={child.label} {...child} />
                   ))}
                 </Stack>
+                {/* ----------------------------- */}
               </PopoverContent>
             )}
           </Popover>
@@ -273,33 +340,33 @@ const NAV_ITEMS = [
     children: [
       {
         label: 'Makeup',
-        subLabel: 'Face',
-        href: '#',
+        // subLabel: 'Face',
+        // href: '#',
       },
       {
         label: 'Skin',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
+        // subLabel: 'Up-and-coming Designers',
+        // href: '#',
       },
       {
         label: 'Hair',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
+        // subLabel: 'Up-and-coming Designers',
+        // href: '#',
       },
       {
         label: 'Appliances',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
+        // subLabel: 'Up-and-coming Designers',
+        // href: '#',
       },
       {
         label: 'Bath & Body',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
+        // subLabel: 'Up-and-coming Designers',
+        // href: '#',
       },
       {
         label: 'Natural',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
+        // subLabel: 'Up-and-coming Designers',
+        // href: '#',
       },
     ],
   },
@@ -307,31 +374,12 @@ const NAV_ITEMS = [
     label: 'Brands',
     children: [
       {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
+        // label: Navoptions(),
       },
     ],
   },
   {
     label: 'Luxe',
-    children: [
-      {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
-      },
-    ],
   },
   {
     label: 'Nykaa Fashion',
