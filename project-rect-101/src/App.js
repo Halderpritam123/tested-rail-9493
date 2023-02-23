@@ -1,11 +1,14 @@
 import logo from './logo.svg';
+import {Box} from '@chakra-ui/react';
 import './App.css';
 import NavBar from './component/NavBar';
+import Body from './component/Body';
 function App() {
   return (
-    <div className="App">
+    <Box className="App">
   <NavBar/>
-    </div>
+  <Body/>
+    </Box>
   );
 }
 
