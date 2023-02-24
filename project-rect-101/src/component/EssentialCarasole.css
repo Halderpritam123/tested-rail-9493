@@ -8,9 +8,7 @@
   h1 {
     margin: 1rem auto 4rem;
   }
-  .style{
-    width:none;
-  }
+  
   .product--image {
     width: 100%;
     height: 16em;
@@ -22,7 +20,7 @@
   } */
   .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    /* max-width: 320px; */
+    max-width: 320px;
     margin: auto 1rem;
     font-family: arial;
     border-radius: 10px;
